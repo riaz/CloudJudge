@@ -1,0 +1,87 @@
+<HTML>
+   <HEAD>      
+      <TITLE>Compiler Test</TITLE>
+   </HEAD>
+   <SCRIPT>
+     //request object
+     var req;
+
+	function load_code()
+	{
+
+	   var code = document.getElementById("code");
+	   code = code.value;
+	   
+	   //url and div
+	   var url="http://localhost/cgi-bin/test.cgi";
+	   var results_div = document.getElementById('results');
+	   results_div.innerHTML = 'compiling...';
+	   
+	   // code for Mozilla, etc.
+	   if (window.XMLHttpRequest)
+	   {  
+		  req=new XMLHttpRequest();
+		  req.onreadystatechange=reqChange;
+	   }//code for IE
+	   else if (window.ActiveXObject)
+	   {
+		  req=new ActiveXObject("Microsoft.XMLHTTP");
+	   }//otherwise an error
+	   else {
+		  alert('unable to create xmlhttprequest object');
+	   }
+	   
+	   //using post method (allows for 2000+ chars)
+	   if(req) {
+		  req.open("POST",url,true);
+		  req.setRequestHeader('Content-Type', 'text/plain');
+		  req.send("code=" + escape(code) + '\n');
+	   }
+	}
+	
+	//function called after perl script returns	
+	function reqChange()
+	{
+		// if xmlhttp shows "loaded"
+		if (req.readyState==4)
+		{
+			// if "OK"
+			if (req.status==200)
+			{
+			  //getting div and the response
+			  var result_div = document.getElementById('results'); 
+			  var response = req.responseText;
+
+			  //no response... no errors!
+			  
+			  if(response == "") {
+				 result_div.innerHTML = "There were no errors";
+			  }//otherwise output errors
+			  else {
+				result_div.innerHTML = response;
+				}  
+			}//problem getting data...
+			else
+			{
+				alert("Problem retrieving data")
+			}
+		}
+	}
+
+      </SCRIPT>
+   <BODY>
+      <TABLE width="100%" border=0>
+      <TR>
+         <TD width="50%">
+            <FORM name="compiler_form">
+               <TEXTAREA name="code" id="code" rows="30" cols="50"></TEXTAREA><br>
+               <INPUT type="button" value="Compile" onClick='load_code()'>
+            </FORM>
+         </TD>
+         <TD width="50%">
+            <DIV id="results">Results</DIV>
+         </TD>
+      </TR>
+      </TABLE>
+</BODY>
+</HTML>
