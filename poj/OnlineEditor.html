@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Ajax Example</title>
+<link rel="stylesheet" href="./styles/style.css" type="text/css"/>
+</head>
+<body>
+<form name="f1">
+	<div id="sc"><b>Source Code:</b><br/>
+		<textarea name="text" cols="80" rows="25" onkeydown="insertTab(this, event);">//Enter Code Here
+        </textarea> 
+    </div>
+    <div id="cpanel">
+		<input type="button" value ="Submit" onClick='JavaScript:xmlhttpPost()'>
+    </div>
+    <div id="res"><b>Output:</b><br/>
+    	<textarea id="result" cols="80" rows="3"></textarea>
+	</div>
+</form>
+<script langauge="Javascript">
+    function insertTab(o, e)
+    {
+	var kC = e.keyCode ? e.keyCode : e.charCode ? e.charCode : e.which;
+	if (kC == 9 && !e.shiftKey && !e.ctrlKey && !e.altKey)
+	{
+		var oS = o.scrollTop;
+		if (o.setSelectionRange)
+		{
+			var sS = o.selectionStart;
+			var sE = o.selectionEnd;
+			o.value = o.value.substring(0, sS) + "\t" + o.value.substr(sE);
+			o.setSelectionRange(sS + 1, sS + 1);
+			o.focus();
+		}
+		else if (o.createTextRange)
+		{
+			document.selection.createRange().text = "\t";
+			e.returnValue = false;
+		}
+		o.scrollTop = oS;
+		if (e.preventDefault)
+		{
+			e.preventDefault();
+		}
+		return false;
+	}
+	return true;
+    }
+
+    function xmlhttpPost()
+	{
+		var url = "http://localhost/cgi-bin/compile.cgi";
+		var xmlHttpReq = false;
+		var self = this;
+
+		//for Mozilla/Firefox/Chrome
+		if(window.XMLHttpRequest){
+			self.xmlHttpReq = new XMLHttpRequest();
+		}//IE
+		else if(window.ActiveXObject){
+			self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		self.xmlHttpReq.open('POST',url,true);
+		self.xmlHttpReq.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		self.xmlHttpReq.onreadystatechange = function(){
+			if(self.xmlHttpReq.readyState == 4){
+				updatePage(self.xmlHttpReq.responseText);
+			}
+		}
+
+		self.xmlHttpReq.send(getquerystring());
+	}
+
+	function getquerystring(){
+		var form = document.forms['f1'];
+		var text = form.text.value;
+		qstr = 'c=' + escape(text);
+		return qstr;
+	}
+
+	function updatePage(str){
+		//document.getElementById('result').innerHTML = str;
+		document.getElementById('result').value = str;
+	}	
+</script>
+</body>
+</html>

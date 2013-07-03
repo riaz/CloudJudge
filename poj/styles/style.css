@@ -1,0 +1,25 @@
+#sc
+{
+	padding:10px;
+	background-color:violet;
+}
+
+#sc textarea
+{
+	border:4px solid #AAAAAA;
+}
+#cpanel
+{
+	padding:10px;
+	background-color:#CCCCCC;
+
+}
+#res
+{
+	padding:10px;
+	background-color:#ECDF71;
+}
+#res textarea
+{
+	border:1px solid #AAAAAA;
+}
