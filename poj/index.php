@@ -3,8 +3,7 @@
 <head>
 <title>Simple Ajax Example</title>
 <link rel="stylesheet" href="styles/style.css" type="text/css"/>
-<link rel="stylesheet" href="styles/prettify.css" type="text/css"/>
-<script src="js/prettify.js" type="text/javascript"></script>
+</head>
 <body>
 <form name="f1">
 	<div id="sc"><b>Source Code:</b><br/>
@@ -149,8 +148,7 @@
 	function updatePage(str){
 		//document.getElementById('result').innerHTML = str;
 		document.getElementById('result').value = str;
-	}	
+	}    	
 </script>
-<!-- <script src="js/run_prettify.js" type="text/javascript"></script> -->
 </body>
 </html>
