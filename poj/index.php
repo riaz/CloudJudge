@@ -3,6 +3,7 @@
 <head>
 <title>Simple Ajax Example</title>
 <link rel="stylesheet" href="styles/style.css" type="text/css"/>
+<script src="js/jquery.js" type="text/javascript"></script>
 </head>
 <body>
 <form name="f1">
@@ -90,6 +91,9 @@
     function renderEngine(o,e)
     {
             syntaxHighlight(o,e);
+            /**/
+            $('#sc textarea#source').html("<b>Hello</b>");
+            /**/
             insertTab(o,e);
     }
 
@@ -116,8 +120,7 @@
     }
 
     function tokenParser(o,word)
-    {
-        alert(word);
+    {       
         console.log(word);
         console.log(sheet.cssRules[0]);
         console.log(sheet.cssRules[1]);

@@ -1,40 +1,41 @@
-#sc
+#sc /*cssRules[0]*/
 {
 	padding:10px;
 	color: white;
 	background-image: url('../img/black-pattern.jpg');
 }
 
-#sc textarea
+#sc textarea /*cssRules[1]*/
 {
 	border:4px solid #AAAAAA;
 	background-color: #0A0A2A;	
 	border-left-width: 15px;
 	color: white;
 }
-#cpanel
+
+#cpanel /*cssRules[2]*/
 {
 	padding:10px;
 	background-color:#CCCCCC;
 }
 
-#res
+#res /*cssRules[3]*/
 {
 	padding:10px;
 	color: white;
 	/*background-color:#ECDF71;*/
 	background-image: url('../img/black-pattern.jpg');
 }
-#res textarea
+#res textarea /*cssRules[4]*/
 {
 	border:1px solid #AAAAAA;
 }
 
-#opt{
+#opt{ /*cssRules[5]*/
 	margin:100px;
 }
 
-.cupid-blue {
+.cupid-blue { /*cssRules[6]*/
   background-color: #d7e5f5;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #d7e5f5), color-stop(100%, #cbe0f5));
   background-image: -webkit-linear-gradient(top, #d7e5f5, #cbe0f5);
@@ -56,7 +57,7 @@
   text-shadow: 0 1px 1px #fff;
   width: 150px; }
 
-.cupid-blue:hover {
+.cupid-blue:hover { /*cssRules[7]*/
     background-color: #ccd9e8;
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ccd9e8), color-stop(100%, #c1d4e8));
     background-image: -webkit-linear-gradient(top, #ccd9e8, #c1d4e8);
@@ -73,12 +74,12 @@
     color: #163659;
     cursor: pointer; }
 
-.cupid-blue:active {
+.cupid-blue:active { /*cssRules[8]*/
     border: 1px solid #8c98a7;
     -webkit-box-shadow: inset 0 0 4px 2px #abbccf, 0 0 1px 0 #eeeeee;
     box-shadow: inset 0 0 4px 2px #abbccf, 0 0 1px 0 #eeeeee; }
 
-.metal {
+.metal { /*cssRules[9]*/
 	/*position: relative;
 	margin: 40px auto;
 			  
@@ -104,7 +105,7 @@
 
 /* Linear ------------------------- */
 
-.metal.linear {	  	
+.metal.linear {	  	/*cssRules[10]*/
 	  background-image: -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%, .1) 7.5%),
 	  -webkit-repeating-linear-gradient(left, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   4%, hsla(0,0%,  0%,.03) 4.5%),
 	  -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%),
@@ -115,3 +116,7 @@
 	   hsl(0,0%,70%)100%);
 }		
 
+#token textarea /*cssRules[11]*/
+{
+	color: green;
+}
