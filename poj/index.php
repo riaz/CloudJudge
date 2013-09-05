@@ -7,7 +7,7 @@
 <body>
 <form name="f1">
 	<div id="sc"><b>Source Code:</b><br/>
-		<textarea id="source" name="text" cols="80" rows="25" onkeydown="insertTab(this, event);">//Enter Code Here 
+		<textarea id="source" name="text" cols="80" rows="25" onkeydown="renderEngine(this,event);">
 		</textarea> 	
     </div>
     <div id="cpanel" class="metal linear">
@@ -83,7 +83,46 @@
     	<textarea id="result" cols="80" rows="3"></textarea>
 	</div>
 </form>
-<script langauge="Javascript">
+<script langauge="javascript">
+    var indexOld = 0;
+    var sheet = document.styleSheets[0];
+
+    function renderEngine(o,e)
+    {
+            syntaxHighlight(o,e);
+            insertTab(o,e);
+    }
+
+    function syntaxHighlight(o,e)
+    {      
+        var str = o.value; 
+        var word;
+        var indexNew; 
+
+            indexNew = str.lastIndexOf(' ');
+
+            if(indexNew != indexOld)
+            {
+                //alert("indexNew"+indexNew);
+                //alert("indexOld"+indexOld);                
+                word = str.substring(indexOld,indexNew);    
+                indexOld = indexNew;
+                //alert(str.lastIndexOf(' '));
+                //alert(word);    
+                tokenParser(o,word);
+                //o.value = tokenParser(o,word);
+
+            }  
+    }
+
+    function tokenParser(o,word)
+    {
+        alert(word);
+        console.log(word);
+        console.log(sheet.cssRules[0]);
+        console.log(sheet.cssRules[1]);
+    }
+
     function insertTab(o, e)
     {
 	var kC = e.keyCode ? e.keyCode : e.charCode ? e.charCode : e.which;
