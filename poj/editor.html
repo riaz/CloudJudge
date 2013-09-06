@@ -14,29 +14,36 @@
 	</style>
 </head>
 <body>
-	<div id="edit">gsdfdsfdsfdf</div>	<!--onClick="setEditable(this);"-->
+	<div id="edit"></div>	<!--onClick="setEditable(this);"-->
 	<script src="js/jquery.js" type="text/javascript"></script>	
 	<script type="text/javascript"> //Global Variables
 	var indexOld = 0;
     var sheet = document.styleSheets[0];
     var editor = document.getElementById('edit');
+    var value = editor.value;
 	</script>
 
 	<script langauge="text/javascript">	   
    		editor.addEventListener("click",setEditable,false);
-   		editor.addEventListener("keydown",renderEngine,false);
+   		editor.addEventListener("keydown",function(event){ insertTab(this,event); },false);
+   		//editor.bind("keydown",renderEngine);
+   		// $('#edit').bind('keydown', function(event) {
+   		// 	insertTab(this,event);
+   		// });    
+ 
 	function setEditable()//o
 	{		
 		this.contentEditable = 'true';
 	}
 
-    function renderEngine(e)
+    function renderEngine(o,e)
     {
            // syntaxHighlight(this,e);
             /**/
-            $('#edit').html("<b>Hello</b>");
+
+            //$('#edit').html(value + "<b>Hello</b>");
             /**/
-            insertTab(this,e);
+            insertTab(o,e);
     }
 
     function syntaxHighlight(o,e)
@@ -69,8 +76,9 @@
     }
 
     function insertTab(o, e)
-    {
+    {    		
 	var kC = e.keyCode ? e.keyCode : e.charCode ? e.charCode : e.which;
+	console.log(kC);
 	if (kC == 9 && !e.shiftKey && !e.ctrlKey && !e.altKey)
 	{
 		var oS = o.scrollTop;
