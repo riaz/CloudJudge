@@ -25,8 +25,17 @@
 
 	<script langauge="text/javascript">	   
    		editor.addEventListener("click",setEditable,false);
-   		editor.addEventListener("keydown",function(event){ insertTab(this,event); },false);
-   		//editor.bind("keydown",renderEngine);
+   		//editor.addEventListener("keydown",function(event){ insertTab(this,event); },false);
+   		editor.onkeydown=function(e){
+    if(e.keyCode==9){
+        e.preventDefault();
+        editor.contentWindow.execCommand('indent', false, null);         
+    }
+}
+
+
+
+   		//editor.execCommand('indent', false, null);
    		// $('#edit').bind('keydown', function(event) {
    		// 	insertTab(this,event);
    		// });    
@@ -43,7 +52,8 @@
 
             //$('#edit').html(value + "<b>Hello</b>");
             /**/
-            insertTab(o,e);
+            //insertTab(o,e);
+
     }
 
     function syntaxHighlight(o,e)
@@ -78,6 +88,8 @@
     function insertTab(o, e)
     {    		
 	var kC = e.keyCode ? e.keyCode : e.charCode ? e.charCode : e.which;
+	console.log("object");
+	console.log(o);
 	console.log(kC);
 	if (kC == 9 && !e.shiftKey && !e.ctrlKey && !e.altKey)
 	{

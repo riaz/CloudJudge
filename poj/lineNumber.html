@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Line Numbering</title>		
+	<style type="text/css">
+		#wrapper{
+			margin:0px;
+			padding:0px;
+		}
+		ul#line{
+			padding:0px;	
+			margin-top:20px;				
+			background-color: gray;	
+			color: white;
+			text-align: center;
+			list-style-type: none;
+			float:left;
+			width: 15px;
+			height:100px;		
+		}
+
+		#edit{
+			padding:0px;
+			margin-top:20px;
+			width:500px;
+			height:100px;					
+			float:left;
+			background-color: #0A0A2A;	
+			color: white;
+		}
+	</style>
+</head>
+<body>
+<div id="wrapper">
+	<ul id="line">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>	
+	</ul>
+	<div id="edit" contentEditable="true"></div>
+</div>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+$("#edit").keydown(function(event){
+	
+		var TAB_KEY = 9;
+	
+		if(event.keyCode == TAB_KEY){
+		
+			notelyAction('indent');
+			
+			if(event.preventDefault){
+			
+				event.preventDefault();
+			
+			}
+		
+		}	
+});
+
+function notelyAction(action){
+	document.execCommand('styleWithCSS', true, null);
+	document.execCommand(action, true, null);
+}
+$('#edit').focus(function(){
+    var s = window.getSelection();
+    var t = 'savedRange'+$(this).attr('id');
+    if (window[t] != null && s.rangeCount > 0)
+        s.removeAllRanges();
+    s.addRange(window[t]);
+}).bind("mouseup keyup",function(){
+    var t = 'savedRange'+$(this).attr('id');
+    window[t] = window.getSelection().getRangeAt(0);
+}).on("mousedown click",function(e){
+    if(!$(this).is(":focus")){
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).focus();
+    }
+});
+
+</script>
+</body>
+</html>
