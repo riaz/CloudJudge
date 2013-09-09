@@ -15,29 +15,29 @@
 			text-align: center;
 			list-style-type: none;
 			float:left;
-			width: 15px;
-			height:100px;		
+			width: 17px;
+			height:400px !important;		
 		}
 		#edit{
 			padding:0px;
 			margin-top:20px;
-			width:500px;
-			height:500px;					
+			width:600px;
+			height:400px !important;					
 			float:left;
 			background-color: #0A0A2A;	
 			color: white;
-			overflow:scroll;
+			overflow:auto;
 		}
 	</style>
 </head>
 <body>
 <div id="wrapper">
 	<ul id="line">
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>4</li>
-		<li>5</li>		
+	<!-- <li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>	 -->
 	</ul>
 	<div id="edit" contentEditable="true"></div>
 </div>
@@ -45,9 +45,14 @@
 <script type="text/javascript">
 $(function() {
 	$object = $('#edit');
+	$lobject = $('ul#line');
 	$incrementer=0;
-	$height=0;	
-    editorInit($('#edit'));
+	$lineCount=0;
+	$initHeight=0;
+	$initLHeight=0;	
+	$height=0;
+	$lheight=0;	
+    editorInit($('#edit'));    
 });
 </script>
 <script type="text/javascript">
@@ -55,15 +60,47 @@ $(function() {
 function editorInit()
 {
 	$div = $object.clone().empty().appendTo($object.parent());
+	$div2 = $lobject.clone().empty().appendTo($lobject.parent());
 	$incrementer = $('<span>a</span>').appendTo($div).height();
-	$height = $div.height();
-	$div.remove();		
+
+	$initHeight = $div.height();
+	$initLHeight = $div2.height();
+
+	$div.remove();
+	$div2.remove();
+
+	populateLineNumber();		
+}
+
+function populateLineNumber()
+{
+	var lines = [];
+	$lineCount = countNumRows();	
+	for(var i=0;i< $lineCount ;i++){
+   	lines.push("<li>"+(i+1)+"</li>");
+	}
+	//Append array to list and refresh
+	$('ul#line').empty();
+	$('ul#line').append(lines.join(' '));
 }
 
 function addLine()
 {
 	$height = $incrementer + $height;
-	$object[0].setAttribute('style','height:'+$height+'px');
+	$lheight = $incrementer + $lheight;
+
+	console.log("Initial Height: "+$initHeight);
+	console.log("Height: "+$height);
+
+	console.log("Initial Line Height: "+$initLHeight);
+	console.log("Line Height: "+$lheight);
+
+	if($height >= $initHeight)
+	{
+		$object[0].setAttribute('style','height:'+$height+'px');
+		$lobject[0].setAttribute('style','height:'+$lheight+'px');			
+	}
+	populateLineNumber();
 }
 
 function removeLine()
@@ -72,12 +109,11 @@ function removeLine()
 	$object[0].setAttribute('style','height:'+$height+'px');
 }
 
-function countNumRows(obj)
-{
-	
-	$measureDiv = obj.clone().empty().appendTo(obj.parent());
-	$span = $('<span>a</span>').appendTo($measureDiv);	
-	$incrementer = $span.height();
+function countNumRows()
+{	
+	//$measureDiv = obj.clone().empty().appendTo(obj.parent());
+	//$span = $('<span>a</span>').appendTo($object);	
+	/*$incrementer = $span.height();*/
 	/*console.log('Incrementer');
 	console.log($incrementer);
 	console.log('Height Parent:');
@@ -92,8 +128,10 @@ function countNumRows(obj)
 	console.log('Height after increment:');
 	console.log(obj.context.height);*/
 
-	$rows = Math.floor($measureDiv.height()/$span.height());
-	$measureDiv.remove();
+	if($height < $initHeight)
+		$rows = Math.floor($initHeight/$incrementer);	
+	else
+		$rows = Math.floor($height/$incrementer);
 
 	return $rows;
 }
@@ -118,6 +156,8 @@ $("#edit").keydown(function(event){
 		
 		}
 		if(event.keyCode == ENTER_KEY)	{
+			//alert($height);
+			//alert($initHeight);
 			addLine();
 		}
 		if(event.keyCode == DELETE_KEY){
