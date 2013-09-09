@@ -22,10 +22,11 @@
 			padding:0px;
 			margin-top:20px;
 			width:500px;
-			height:100px;					
+			height:500px;					
 			float:left;
 			background-color: #0A0A2A;	
 			color: white;
+			overflow:scroll;
 		}
 	</style>
 </head>
@@ -44,8 +45,8 @@
 <script type="text/javascript">
 $(function() {
 	$object = $('#edit');
-	$incrementer;
-	$height;	
+	$incrementer=0;
+	$height=0;	
     editorInit($('#edit'));
 });
 </script>
@@ -54,14 +55,21 @@ $(function() {
 function editorInit()
 {
 	$div = $object.clone().empty().appendTo($object.parent());
-	incrementer = $('<span>a</span>').appendTo($div).height();
-	height = $div.height();		
+	$incrementer = $('<span>a</span>').appendTo($div).height();
+	$height = $div.height();
+	$div.remove();		
 }
 
 function addLine()
 {
-	$incrementer = $incrementer + $height;
-	$object[0].setAttribute('style','height:'+$incrementer+'px');
+	$height = $incrementer + $height;
+	$object[0].setAttribute('style','height:'+$height+'px');
+}
+
+function removeLine()
+{
+	$height = $height - $incrementer;
+	$object[0].setAttribute('style','height:'+$height+'px');
 }
 
 function countNumRows(obj)
@@ -95,6 +103,8 @@ function countNumRows(obj)
 $("#edit").keydown(function(event){
 	
 		var TAB_KEY = 9;
+		var ENTER_KEY = 13;
+		var DELETE_KEY = 46;
 	
 		if(event.keyCode == TAB_KEY){
 		
@@ -108,7 +118,10 @@ $("#edit").keydown(function(event){
 		
 		}
 		if(event.keyCode == ENTER_KEY)	{
-			alert("Hello");
+			addLine();
+		}
+		if(event.keyCode == DELETE_KEY){
+			removeLine();
 		}
 });
 
