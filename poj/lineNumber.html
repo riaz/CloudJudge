@@ -18,7 +18,6 @@
 			width: 15px;
 			height:100px;		
 		}
-
 		#edit{
 			padding:0px;
 			margin-top:20px;
@@ -37,14 +36,62 @@
 		<li>2</li>
 		<li>3</li>
 		<li>4</li>
-		<li>5</li>
-		<li>6</li>
-		<li>7</li>	
+		<li>5</li>		
 	</ul>
 	<div id="edit" contentEditable="true"></div>
 </div>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript">
+$(function() {
+	$object = $('#edit');
+	$incrementer;
+	$height;	
+    editorInit($('#edit'));
+});
+</script>
+<script type="text/javascript">
+
+function editorInit()
+{
+	$div = $object.clone().empty().appendTo($object.parent());
+	incrementer = $('<span>a</span>').appendTo($div).height();
+	height = $div.height();		
+}
+
+function addLine()
+{
+	$incrementer = $incrementer + $height;
+	$object[0].setAttribute('style','height:'+$incrementer+'px');
+}
+
+function countNumRows(obj)
+{
+	
+	$measureDiv = obj.clone().empty().appendTo(obj.parent());
+	$span = $('<span>a</span>').appendTo($measureDiv);	
+	$incrementer = $span.height();
+	/*console.log('Incrementer');
+	console.log($incrementer);
+	console.log('Height Parent:');
+	console.log(obj.context.height);	
+	console.log('Height Clone:');
+	console.log($measureDiv.height());
+	$incrementer = $incrementer + obj.context.height;
+	obj[0].setAttribute('style','height:'+$incrementer+'px');
+	console.log('get Attribute');
+	console.log(obj[0].getAttribute('style'));
+
+	console.log('Height after increment:');
+	console.log(obj.context.height);*/
+
+	$rows = Math.floor($measureDiv.height()/$span.height());
+	$measureDiv.remove();
+
+	return $rows;
+}
+
+//console.log(countNumRows($("#edit")));
+ 
 $("#edit").keydown(function(event){
 	
 		var TAB_KEY = 9;
@@ -59,7 +106,10 @@ $("#edit").keydown(function(event){
 			
 			}
 		
-		}	
+		}
+		if(event.keyCode == ENTER_KEY)	{
+			alert("Hello");
+		}
 });
 
 function notelyAction(action){
