@@ -22,17 +22,17 @@
 			text-align: center;
 			list-style-type: none;
 			float:left;
-			width: 40px;
-			height:400px !important;
-			/*overflow:auto;		*/
-			overflow-y: scroll;
-			right: -30px;
+			width: 17px;
+			height:400px; /*!important;*/
+			/*overflow:auto;	*/
+			
 		}
 		#edit{
 			padding:0px;
 			margin-top:20px;
 			width:600px;
-			height:400px !important;					
+			font-family:Consolas, monospace;
+			height:400px; /*!important;*/
 			float:left;
 			background-color: #0A0A2A;	
 			color: white;
@@ -51,12 +51,13 @@
 		<li>5</li>	 -->
 		<!-- </ul> -->
 	</div>	
-	<div id="edit" contentEditable="true"></div>
+	<div id="edit" contentEditable="true"></div>	
 </div>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
 	$object = $('#edit');
+	$object2 = null;
 	$lobject = $('ul#line');
 	$incrementer=0;
 	$lineCount=0;
@@ -68,21 +69,30 @@ $(function() {
 });
 </script>
 <!-- hide scrollbar -->
-// <script type="text/javascript" charset="utf-8">
-// 	// get the width of the linediv minus scrollbar
+<!--<script type="text/javascript" charset="utf-8">-->
+<!-- // get the width of the linediv minus scrollbar
 // 	var linediv = document.getElementById("line").scrollWidth;
 // 	//alert(linediv);
 // 	// width of our wrapper equals width of the inner part of the linediv
 // 	//document.getElementById("wrap").style.width = linediv + 'px';
 // 	document.getElementById("wrap").setAttribute('style','width:'+$linediv+'px');
-// </script>
+ --><!-- </script>-->
 <script type="text/javascript">
 
 function editorInit()
 {
 	$div = $object.clone().empty().appendTo($object.parent());
+	// $div = $object.clone();
+	// $div.setAttribute('style','width:100px');
+ //    $div.appendTo($object.parent());
 	$div2 = $lobject.clone().empty().appendTo($lobject.parent());
 	$incrementer = $('<span>a</span>').appendTo($div).height();
+
+	/*edit*/
+	//$object2 = $div;
+	/*edit*/
+
+	//$div.setAttribute('style','width:200px');
 
 	$initHeight = $div.height();
 	$initLHeight = $div2.height();
@@ -130,6 +140,11 @@ function removeLine()
 	$object[0].setAttribute('style','height:'+$height+'px');
 }
 
+function getCurrentLine()
+{
+
+}
+
 function countNumRows()
 {	
 	//$measureDiv = obj.clone().empty().appendTo(obj.parent());
@@ -167,7 +182,7 @@ $("#edit").keydown(function(event){
 	
 		if(event.keyCode == TAB_KEY){
 		
-			notelyAction('indent');
+			//notelyAction('indent');
 			
 			if(event.preventDefault){
 			
@@ -180,6 +195,7 @@ $("#edit").keydown(function(event){
 			//alert($height);
 			//alert($initHeight);
 			addLine();
+			console.log($object);
 		}
 		if(event.keyCode == DELETE_KEY){
 			removeLine();
@@ -190,6 +206,7 @@ function notelyAction(action){
 	document.execCommand('styleWithCSS', true, null);
 	document.execCommand(action, true, null);
 }
+
 $('#edit').focus(function(){
     var s = window.getSelection();
     var t = 'savedRange'+$(this).attr('id');
