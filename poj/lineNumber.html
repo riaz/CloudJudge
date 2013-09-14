@@ -187,17 +187,23 @@ $("#edit").keydown(function(event){
 		var ENTER_KEY = 13;
 		var DELETE_KEY = 46;
 	
-		if(event.keyCode == TAB_KEY){
+		// if(event.keyCode == TAB_KEY){
 		
-			//notelyAction('indent');
+		// 	//notelyAction('indent');
 			
-			if(event.preventDefault){
+		// 	if(event.preventDefault){
 			
-				event.preventDefault();
+		// 		event.preventDefault();
 			
-			}
+		// 	}
 		
-		}
+		// }
+		if (event.keyCode == TAB_KEY)
+              {
+                  event.preventDefault();
+                  document.execCommand('styleWithCSS',true,null);
+                  document.execCommand('indent',true,null);
+              }
 		if(event.keyCode == ENTER_KEY)	{
 			//alert($height);
 			//alert($initHeight);
