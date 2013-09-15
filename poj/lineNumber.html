@@ -29,7 +29,7 @@
 			list-style-type: none;
 			float:left;
 			/*width: 20px;			*/
-			width: 3%;
+			width: 4%;
 			height:400px !important;
 			overflow:hidden;
 			text-overflow:clip;
@@ -38,7 +38,7 @@
 			padding:0px;
 			margin-top:20px;
 			/*width:600px;			*/
-			width: 97%;
+			width: 96%;
 			font-family:Consolas, monospace;
 			height:400px !important;
 			float:left;			
@@ -88,12 +88,14 @@ $(function() {
 	$object = $('#edit');
 	$object2 = null;
 	$lobject = $('ul#line');
-	$incrementer=0;
-	$lineCount=0;
-	$initHeight=0;
-	$initLHeight=0;	
-	$height=0;
-	$lheight=0;	
+	$incrementer = 0;
+	$digitCount = 0;
+	$pdigitCount = 0;
+	$lineCount = 0;
+	$initHeight = 0;
+	$initLHeight = 0;	
+	$height = 0;
+	$lheight = 0;	
     editorInit($('#edit'));    
 });
 </script>
@@ -144,9 +146,32 @@ function populateLineNumber()
 	for(var i=0;i< $lineCount ;i++){
    	lines.push("<li>"+(i+1)+"</li>");
 	}
+
 	//Append array to list and refresh
 	$('ul#line').empty();
 	$('ul#line').append(lines.join(' '));
+
+	//Managing line number div width
+	//digitCount();
+	//console.log('Present Digit Count');
+	//console.log($pdigitCount);
+}
+
+function digitCount()
+{
+	$pdigitCount=0;
+	console.log($pdigitCount);
+      		
+	for(var num=$lineCount;num!=0;num=num/10){
+		console.log('lineCount');
+		console.log($lineCount);
+
+		$pdigitCount++;
+	}
+
+	console.log('pdigitCount');
+	console.log($pdigitCount);
+      		
 }
 
 function addLine()
