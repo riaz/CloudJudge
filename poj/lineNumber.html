@@ -238,7 +238,7 @@ $("#edit").keydown(function(event){
 		var TAB_KEY = 9;
 		var ENTER_KEY = 13;
 		var DELETE_KEY = 46;
-		console.log(event);
+		//console.log(event);
 	
 		// if(event.keyCode == TAB_KEY){
 		
@@ -272,6 +272,21 @@ function notelyAction(action){
 	document.execCommand('styleWithCSS', true, null);
 	document.execCommand(action, true, null);
 }
+
+$('#edit').keypress(function(evt){
+	evt = evt || window.evt;
+	var charCode = evt.which || evt.keyCodel
+	var char = String.fromCharCode(charCode);
+
+	if(/\d/.test(char)){
+		return false;
+	}
+		console.log(char);
+
+		//consoling the div object 
+
+		console.log($('#edit'));
+});
 
 $('#edit').focus(function(){
     var s = window.getSelection();

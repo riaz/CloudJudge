@@ -15,8 +15,16 @@
 		<input type="button" class="cupid-blue" value ="Submit" onClick='JavaScript:xmlhttpPost()'>
 			<span id="opt">		      
                 <label for="lang">Select Language:</label>
-                <select name="lang" id="lang">
-                    <option value="7">Ada (gnat-4.3.2)</option>
+                    <select name="lang" id="lang">                
+                    <option value="1">C</option>
+                    <!-- <option value="27">C#</option> -->
+                    <option value="2" selected="selected">C++</option>                    
+                    <option value="3">Java</option>                    
+                    <option value="4">Perl</option>
+                    <!-- <option value="4">Python</option> -->
+                    <option value="5">Python3</option>
+                    <!-- <option value="17">Ruby</option> -->
+                    <!-- <option value="7">Ada (gnat-4.3.2)</option>
                     <option value="13">Assembler (nasm-2.07)</option>
                     <option value="45">Assembler (gcc-4.3.4)</option>
                     <option value="104">AWK (gawk) (gawk-3.1.6)</option>
@@ -76,7 +84,7 @@
                     <option value="62">Text (text 6.10)</option>
                     <option value="115">Unlambda (unlambda-2.0.0)</option>
                     <option value="101">Visual Basic .NET (mono-2.4.2.3)</option>
-                    <option value="6">Whitespace (wspace 0.3)</option>
+                    <option value="6">Whitespace (wspace 0.3)</option> -->
                 </select>
                 </span>          
     </div>
@@ -92,13 +100,13 @@
     {
             syntaxHighlight(o,e);
             /**/
-            $('#sc textarea#source').html("<b>Hello</b>");
+            //$('#sc textarea#source').html("<b>Hello</b>");
             /**/
             insertTab(o,e);
     }
 
     function syntaxHighlight(o,e)
-    {      
+    {  
         var str = o.value; 
         var word;
         var indexNew; 
@@ -183,7 +191,11 @@
 	function getquerystring(){
 		var form = document.forms['f1'];
 		var text = form.text.value;
-		qstr = 'c=' + encodeURIComponent(text);
+        var e = document.getElementById('lang');
+        console.log(e);
+        qstr = 'c=' + encodeURIComponent(text);
+        qstr = qstr + '&lang=' + e.options[e.selectedIndex].value;
+        console.log(qstr);
 		return qstr;
 	}
 

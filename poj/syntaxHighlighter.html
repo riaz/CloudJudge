@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Syntax Highlighter Demo</title>		
+</head>
+<body>
+	<input id="hi" name="hi" value="foo AND bar" />
+	<script src="js/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	
+	//$(document).ready(function(){ //means the same as below
+		$(function(){ //This is equivalent to calling body onLoad method()
+			function hilite(txt){
+				return txt.replace(/bar/g, '<span style="color: green">bar</span');		
+			}
+
+			var methods = {
+				'init': function(params){
+					var h,el,txt;
+
+					if($this.length !== 1){
+						return;
+					}
+
+					h = $(this).height();
+					el = document.createElement('div');
+					txt = $(this).val();
+
+					$(this).data('params',$.extend({},params));
+					$(this).data('el',el);
+
+					$(el).css('min-height',h);
+					$(el).css('padding','0.5em');
+					$(el).css('border','1px solid black');
+
+					$(el).attr('contenteditable',true);
+					$(el).data('inputelement',this);
+
+					txt = hilite(txt); //this is the call
+
+					$(el).html(txt);
+
+					$(el).bind('keyup',function(e){
+						var input = $(this).data('inputelement');
+						txt = $(this).text();
+
+						console.log('keycode:'+e.keyCode);
+						$(input).val($(this).text());
+						txt = hilite(txt);
+						$(this).html(txt);
+					});
+					$(this).hide();
+					$(this).after(el);
+				},
+
+				'destroy' : function(){
+					var el = $(this).data('el');
+					$(el).unbind('keyup');
+					$(el).remove();
+					$(this).show();
+					$(this).removeData('el');
+					$(this).removeData('params');
+				}
+			};
+			$.fn.texthighlighter = function(method){
+				
+				if(method == undefined || typeof method == 'object'){
+					return methods.init.apply(this,arguments);
+				}
+
+				if(methods[method] !== undefined){
+					return methods[method].apply(this,Array.prototype.slice.call(arguments,1));
+				}
+				$.error('Method' + method + 'does not exists on jquery');
+			};
+		});
+		$(function() { 
+			$('#hi').texthighlighter();
+		}(jQuery));
+	//});
+	</script>
+</body>
+</html>	

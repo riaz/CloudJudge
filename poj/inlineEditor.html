@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML5 Inline text editing and saving</title>
+	<meta charset="utf-8"></meta>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		body {		
+			font-family: Helvetica,Arial,sans-serif;
+			color:#333333;
+			font-size:13px;
+		}
+		 h1{
+			font-family: 'Droid Serif', Georgia, Times, serif;
+			font-size: 28px;		
+		}
+
+		a{
+			color: #0071D8;
+			text-decoration:none;
+		}
+
+		a:hover{
+			text-decoration:underline;
+		}
+
+		:focus {
+			outline: 0;
+		}
+
+		#wrap{
+			width: 500px;
+			margin: 0px auto;
+			overflow: auto;
+		}
+
+		#content{
+			background: #f7f7f7;
+			border-radius: 10px;
+		}
+
+		.success{
+			background: #B6D96C;
+		}
+
+		.error{
+			background: #ffc5cf; 
+		}
+
+		#footer{
+			margin-top:15px;
+			text-align: center;
+		}
+
+		#status{
+			display:none; 
+			margin-bottom:15px; 
+			padding:5px 10px; 
+			border-radius:5px;
+		}
+
+		#save{	
+			display: none;
+			margin: 5px 10px 10px;		
+			outline: none;
+			cursor: pointer;	
+			text-align: center;
+			text-decoration: none;
+			font: 12px/100% Arial, Helvetica, sans-serif;
+			font-weight:700;	
+			padding: 5px 10px;	
+			-webkit-border-radius: 5px; 
+			-moz-border-radius: 5px;
+			border-radius: 5px;	
+			color: #606060;
+			border: solid 1px #b7b7b7;	
+			background: #fff;
+			background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+			background: -moz-linear-gradient(top,  #fff,  #ededed);
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+		}	
+		
+		#save:hover
+		{
+	        background: #ededed;
+			background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+			background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+		}
+
+		#editable{			
+			padding: 10px;		
+		}
+	</style>
+	<script type="text/javascript"></script>
+</head>
+<body>
+	<div id="wrap">
+	<h1><a href="http://codeguage.com">HTML5 Inline text editing and saving </a></h1>
+		<div id="status"></div>
+		<div id = "content">		
+			<div id="editable" contentEditable="true">
+				<?php
+				//get data from database.
+				include("db.php");
+				$sql = mysql_query("select text from content where element_id='1'");
+				$row = mysql_fetch_array($sql);			
+				echo $row['text'];
+				?>
+			</div>
+			<button id="save">Save</button>
+		</div>
+		<div id="footer">
+		<a href="http://codeguage.com/">Simple Tutorials</a> 
+		</div>
+	</div>
+	<script src="js/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$('#editable').click(function(e){
+			$('#save').show();
+			e.stopPropagation();
+		});
+
+		$(document).click(function(){
+			$('#save').hide();
+		});
+
+	//posting the data to save into the mysql database
+
+	$('save').click(function(e){
+		var content = $('#editable').html();
+
+		$.ajax({
+			url: 'save.php',
+			type: 'POST',
+			data: {
+				content: content
+			},
+			success : function(data){
+				if(data == '1'){
+					$('#status')
+					.addClass("Success")
+					.html("Data saved successfully")
+					.fadeIn('slow')
+					.delay(3000)
+					.fadeOut('slow');
+				}else{
+					$('#status')
+					.addClass("error")
+					.html("Error, data cannot be saved")
+					.fadeIn('slow')
+					.delay(3000)
+					.fadeOut('slow');
+				}
+			}
+		});
+	});	
+	</script>
+</body>	
+</html>
